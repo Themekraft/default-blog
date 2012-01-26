@@ -34,6 +34,7 @@ function default_blog_options_page($options,$links){
   			<li class="ui-state-default ui-corner-top"><a href="#cap_plugins"><?php _e('Plugins', 'default-blog-options') ?></a></li>
   			<li class="ui-state-default ui-corner-top"><a href="#cap_settings"><?php _e('Settings', 'default-blog-options') ?></a></li>
   			<li class="ui-state-default ui-corner-top"><a href="#cap_options"><?php _e('Options table (Expert modus)', 'default-blog-options') ?></a></li>
+			<?php do_action('defblog-settings-tabs-active');?>
             
             <?php }else{ ?>
             <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#cap_select_blog" class="selected">Blog</a></li>
@@ -46,7 +47,8 @@ function default_blog_options_page($options,$links){
   			<li class="ui-state-default ui-corner-top"><a href="#"><?php _e('Plugins', 'default-blog-options') ?></a></li>
   			<li class="ui-state-default ui-corner-top"><a href="#"><?php _e('Settings', 'default-blog-options') ?></a></li>
             <li class="ui-state-default ui-corner-top"><a href="#"><?php _e('Options table (Expert modus)', 'default-blog-options') ?></a></li>
-  			
+  			<?php do_action('defblog-settings-tabs-unactive');?>
+			
             <?php } ?>
   		</ul>
 	
@@ -102,6 +104,8 @@ function default_blog_options_page($options,$links){
         <div id="cap_options" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide">
         	<?php if($extended){include($defblog_plugin_path."/extended/admin-default-blog-options.inc.php");}else{include($defblog_plugin_path."/admin/admin-default-blog-options.inc.php");}?>
         </div>
+		
+		<?php do_action('defblog-settings-tabs-content');?>
         
         </form>
     </div>

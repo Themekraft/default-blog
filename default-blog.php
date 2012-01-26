@@ -109,6 +109,8 @@ function default_blog(){
 		$defblog_templates[$template_id]['plugins']=$_POST['plugins'];
 		$defblog_templates[$template_id]['options']=$_POST['options'];
 		
+		do_action_ref_array('defblog-submit', array(&$defblog_templates));
+				
 		update_defblog_templates($defblog_templates);
 		
 	    alert(__('Settings updatet!','default-blog-options'));
@@ -132,6 +134,9 @@ function initialise_blog($blog_id){
 		copy_plugins($defblog_id,$blog_id);
 		copy_settings($defblog_id,$blog_id);
 		copy_options($defblog_id,$blog_id);
+		
+		do_action_ref_array( 'defblog-init-new-blog', array($defblog_id, $blog_id) );
+
 	}
 }
 // This script will run the first time, the plugin was started
