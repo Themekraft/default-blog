@@ -474,18 +474,20 @@ function copy_appearance($from_blog_id,$to_blog_id){
 	$blog_appearance=$defblog_templates[$template_id]['appearance'];
 	
 	// Copy theme
-	if($blog_appearance["theme"]==true){
+	if( (boolean) $blog_appearance["theme"] == TRUE ){
 		
 		switch_to_blog($from_blog_id);
 		$current_template=get_option('current_theme');
 		$template=get_option('template');
 		$current_stylesheet=get_option('stylesheet');
+		$theme_mods = get_option( 'theme_mods_' . $current_stylesheet );
   		restore_current_blog();
-  		
+		
 		switch_to_blog($to_blog_id);
   		update_option('current_theme', $current_template);
   		update_option('template', $template);
 		update_option('stylesheet', $current_stylesheet);
+		update_option('theme_mods_' . $current_stylesheet, $theme_mods);
 		restore_current_blog();
 	}
 }
