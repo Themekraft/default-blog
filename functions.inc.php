@@ -534,7 +534,7 @@ function copy_settings($from_blog_id,$to_blog_id){
 
 // Updating options of new blog
 function copy_options($from_blog_id,$to_blog_id){
-	global $defblog_settings, $defblog_templates;
+	global $defblog_settings, $defblog_templates, $wp_rewrite;
 	
 	$template_id=get_template_id();
 	$defblog_id=$defblog_templates[$template_id]['id'];
@@ -543,8 +543,21 @@ function copy_options($from_blog_id,$to_blog_id){
 	
 	if(is_array($options)){
 		foreach($options AS $option){
-			switch_to_blog($to_blog_id);
-			update_option($option,get_blog_option($from_blog_id,$option));
+			switch_to_blog( $to_blog_id );
+			if( $option == 'permalink_structure' ):
+				$wp_rewrite->set_permalink_structure( get_blog_option( $from_blog_id, $option ) );
+			elseif( $option == 'category_base' ):
+				$wp_rewrite->set_category_base( get_blog_option( $from_blog_id, $option ) );
+			elseif( $option == 'tag_base' ):
+				$wp_rewrite->set_tag_base( get_blog_option( $from_blog_id, $option ) );
+			else:
+				update_option( $option, get_blog_option( $from_blog_id, $option ) );
+			endif;
+			
+			create_initial_taxonomies();
+			
+			$wp_rewrite->flush_rules();
+			
 			restore_current_blog();
 		}
 	}
