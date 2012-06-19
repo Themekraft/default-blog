@@ -16,7 +16,7 @@
 	echo "<th>".__('Value','default-blog-options')."</th>";		   
 	echo "<th>".__('Take it (checked)','default-blog-options')."</th>";	    
 	echo "</tr>";
-    
+	
     $options = $wpdb->get_results("SELECT * FROM ".$wpdb->base_prefix.$defblog_id."_options ORDER BY option_name");
     foreach((array) $options as $option) :
         $disabled = '';
