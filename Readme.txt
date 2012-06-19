@@ -4,21 +4,35 @@ Tags: options,wpmu,wordpress mu,blogs,create blogs,blog defaults,wp_options,auto
 Requires at least: wpmu 3.0
 Tested up to: wpmu 3.0.1
 Requires at least: 3.0
-Stable tag:  0.4.1
+Stable tag:  0.5
 
 Clone your blog settings to all new blogs youre adding. Copy settings like Posts, Pages, Theme settings, Blog options ... 
 
 == Description ==
-<strong>Not compatible with older versions of the plugin!</strong>
+Dublicate your Blog! Create your Blog template and use it as draft for all new blogs you create in your WordPress Network installation.
 
-Want to dublicate blogs with same settings? If you use Wordpress Blog network, the plugin gives you the possibility to create a default blog as a template for all new blogs. This plugin is for site admins of Multiuser sites.
+In the free version you can duplicate the following settings:
 
-Just create a blog and select it as default blog. After that you can select particular elements (articles, pages, appearance, plugin settings, and so on) you want to copy to all new blogs you will to create.
+   * Posts
+   * Pages
+   * Keywords
+   * Tags
+   * Links
+   * Design
+   * Plugin
+   * Values from Blog option table
+   
+In the <a href="http://themekraft.com/shop/default-blog/">pro version</a> you also can duplicate more settings:
+
+   * Menues
+   * Widgets
+  
+<a href="http://themekraft.com/shop/default-blog/">Get the pro version!</a>
 
 Very nice for mass blog creation as in communities!
 
 Bug report, please go here:<br><br>
-http://sven-lehnert.de/en/2010/02/26/default-blog-options-2/
+https://github.com/Themekraft/default-blog/issues
 
 == Installation ==
 <h3>Installing Plugin</h3>
@@ -53,6 +67,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 **********************************************************************
 
 ==  Version history  ==
+
+0.5 | Changed Plugin structure and added hooks
 
 0.4.1 | Added flexible table prefixes | Fixed GUI Javascript Bugs
 
