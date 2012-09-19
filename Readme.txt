@@ -4,7 +4,7 @@ Tags: options,wpmu,wordpress mu,blogs,create blogs,blog defaults,wp_options,auto
 Requires at least: wpmu 3.0
 Tested up to: wpmu 3.0.1
 Requires at least: 3.0
-Stable tag:  0.5
+Stable tag:  1.0 alpha
 
 Clone your blog settings to all new blogs youre adding. Copy settings like Posts, Pages, Theme settings, Blog options ... 
 
@@ -67,6 +67,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 **********************************************************************
 
 ==  Version history  ==
+
+1.0 alpha | Totally reworked and added mass of options
 
 0.5 | Changed Plugin structure and added hooks
 

@@ -5,7 +5,7 @@ Plugin URI: http://wordpress.org/extend/plugins/default-blog-options/
 Description: Create new blogs with values like Posts, Pages, Theme settings, Blog options ... from a default blog made by you.
 Author: Sven Lehnert, Sven Wagener
 Author URI: http://www.rheinschmiede.de
-Version: 0.5
+Version: 1.0 alpha
 License: (GNU General Public License 3.0 (GPL) http://www.gnu.org/licenses/gpl.html)
 Copyright: Sven Wagener
 */
@@ -136,6 +136,8 @@ class default_blog{
 		$this->components = apply_filters( 'default_blog_components', array( 
 			'blog-template' =>  $components_folder . '/blog-template' , 
 			'posts' =>  $components_folder . '/posts' , 
+			'menus' =>  $components_folder . '/menus' , 
+			'sidebars' =>  $components_folder . '/sidebars' , 
 			'links' =>  $components_folder . '/links' , 
 			'settings' =>  $components_folder . '/settings',
 			'options' =>  $components_folder . '/options',

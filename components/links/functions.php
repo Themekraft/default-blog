@@ -1,6 +1,6 @@
 <?php
 
-add_dfb_plugin( 'links', __( 'Links', 'default-blog-options' ), 'default_blog_links_admin', 'default_blog_links_copy', 'default_blog_links_save', 10 );
+add_dfb_plugin( 'links', __( 'Links', 'default-blog-options' ), 'default_blog_links_admin', 'default_blog_links_copy', 'default_blog_links_save', 20 );
 
 function default_blog_links_admin(){ 
 	global $wpdb, $default_blog_template;

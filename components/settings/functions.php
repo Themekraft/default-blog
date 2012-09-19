@@ -1,6 +1,6 @@
 <?php
 
-add_dfb_plugin( 'settings', __( 'Settings', 'default-blog-options' ), 'default_blog_settings_admin', 'default_blog_settings_copy', 'default_blog_settings_save', 15 );
+add_dfb_plugin( 'settings', __( 'Settings', 'default-blog-options' ), 'default_blog_settings_admin', 'default_blog_settings_copy', 'default_blog_settings_save', 25 );
 
 function default_blog_settings_admin(){ 
 	global $wpdb, $default_blog_template;
@@ -26,7 +26,7 @@ function default_blog_settings_admin(){
 		
 		$content.= '<tr>';
 			$content.= '<td><label for="appearance[theme]">' . __( 'Theme', 'default-blog-options' ) . '</label></td>';
-			$content.= '<td>' . sprintf( __('Set up Theme and Theme settings of "%s" theme.' ), get_blog_option( DFB_TEMPLATE_EDIT_ID ,'current_theme' ) ) . '</td>';
+			$content.= '<td>' . sprintf( __('Set up Theme and Theme settings of "%s" theme.' ), get_blog_option( DFB_TEMPLATE_EDIT_BLOG_ID ,'current_theme' ) ) . '</td>';
 			$content.= '<td><input type="checkbox" name="' . DFB_OPTION_GROUP . '[' . DFB_TEMPLATE_EDIT_ID . '][appearance][theme]" value="true"' . $checked_appearance_theme . ' /></td>';
 		$content.= '<tr>';
 		

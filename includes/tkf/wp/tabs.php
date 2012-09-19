@@ -63,11 +63,11 @@ class TK_Jqueryui_Tabs extends TK_HTML{
 			
 			$html = '<script type="text/javascript">
 			jQuery(document).ready(function($){
-				var cookieName = "stickyTabs_' . $id . '";
+				var cookieName_' . $id . ' = "stickyTabs_' . $id . '";
 				$( ".' . $id . '" ).tabs({
-					selected: ( $.cookies.get( cookieName ) || 0 ),
+					selected: ( $.cookies.get( cookieName_' . $id . ' ) || 0 ),
 					show: function(event, ui) {
-						$.cookies.set( cookieName, $( ".' . $id . '" ).tabs( "option", "selected" ) );
+						$.cookies.set( cookieName_' . $id . ', $( ".' . $id . '" ).tabs( "option", "selected" ) );
 					}
 				});
 			});

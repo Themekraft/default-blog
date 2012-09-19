@@ -12,7 +12,7 @@ if( is_array( $plugins ) ):
 	foreach( $plugins AS $plugin ):
 			
 		// If Templates are added and Template ID is set OR tab is blog template settings
-		if( DFB_TEMPLATE_EDIT_ID > 0  || 'blog-template' == $plugin['slug'] ):
+		if( ( DFB_TEMPLATE_EDIT_ID > 0  || 'blog-template' == $plugin['slug'] ) && function_exists( $plugin[ 'function_admin' ] ) ):
 		
 			$element[ 'id' ] = $plugin['slug'];
 			$element[ 'title' ] = $plugin['title'];
