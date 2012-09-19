@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Plugin functions
  */
@@ -9,16 +8,15 @@ function add_dfb_plugin( $slug, $title, $function_admin, $function_copy = '', $f
 	
 	$plugin_slugs = get_dfb_plugin_slugs();
 	
-	if( !is_array( $plugin_slugs ) )
-		return FALSE;
-	
-	// Deleting plugins with same slug, which have been added before
-	if( in_array( $slug, $plugin_slugs ) ):
-		foreach( $plugins AS $key => $plugin_list ):
-			if( array_key_exists( $slug, $plugin_list ) ):
-				unset( $plugins[ $key ][ $slug ] );
-			endif;
-		endforeach;
+	if( is_array( $plugin_slugs ) ):
+		// Deleting plugins with same slug, which have been added before
+		if( in_array( $slug, $plugin_slugs ) ):
+			foreach( $plugins AS $key => $plugin_list ):
+				if( array_key_exists( $slug, $plugin_list ) ):
+					unset( $plugins[ $key ][ $slug ] );
+				endif;
+			endforeach;
+		endif;
 	endif;
 	
 	//Setting up new data

@@ -84,29 +84,6 @@ function default_blog_template_admin(){
 	
 	echo $content;
 	
-	
-	echo '<br /><br /><br /><br />Options: <pre>';
-	print_r( get_option( DFB_OPTION_GROUP ) );
-	echo '</pre>';
-	
-	echo 'Templates: <pre>';
-	print_r( get_option( DFB_TEMPLATE_OPTIONS ) );
-	echo '</pre>';
-	
-	echo '<pre>';
-	print_r( get_dfb_plugins() );
-	echo '</pre>';
-	
-	/*
-	echo 'Old Templates: <pre>';
-	print_r( get_site_option( 'defblog_templates' ) );
-	echo '</pre>';
-	
-	echo 'Old Settings: <pre>';
-	print_r( get_site_option( 'defblog_settings' ) );
-	echo '</pre>';
-	 */
-	
 	do_action( 'default-blog-template-admin-bottom' );
 }
 
