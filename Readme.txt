@@ -13,23 +13,19 @@ Dublicate your Blog! Create your Blog template and use it as draft for all new b
 
 In the free version you can duplicate the following settings:
 
-   * Posts
-   * Pages
-   * Keywords
-   * Tags
+   * All Post types (Posts, Pages and other post types)
+   * All Taxonomies (Categories, Tags and much more)
+   * Menues
+   * Sidebars & Widgets
    * Links
-   * Design
-   * Plugin
-   * Values from Blog option table
+   * Settings
+   * Values from Blog options
    
 In the <a href="http://themekraft.com/shop/default-blog/">pro version</a> you also can duplicate more settings:
 
-   * Menues
-   * Widgets
-  
 <a href="http://themekraft.com/shop/default-blog/">Get the pro version!</a>
 
-Very nice for mass blog creation as in communities!
+Very nice for mass blog creation!
 
 Bug report, please go here:<br><br>
 https://github.com/Themekraft/default-blog/issues
