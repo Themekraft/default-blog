@@ -1,0 +1,558 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Default Blog v0.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-18 15:09+0100\n"
+"PO-Revision-Date: 2012-09-11 22:08:26+0000\n"
+"Last-Translator: Sven Wagener <sven.wagener@rheinschmiede.de>\n"
+"Language-Team: Sven Wagener <sven.wagener@rheinschmiede.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: P:/_Wordpress-Plugins/Default Blog/trunk\n"
+"X-Textdomain-Support: yes"
+
+#: admin.php:38
+#: default-blog.php:121
+#@ default-blog-options
+msgid "Default Blog"
+msgstr "Blogvorlage"
+
+#: default-blog.php:226
+#@ default-blog-options
+msgid "Default Blog ID Saved!"
+msgstr "Default Blog ID wurde gespeichert!"
+
+#: default-blog.php:259
+#@ default-blog-options
+msgid "Settings updatet!"
+msgstr "Einstellungen gespeichert!"
+
+#: admin/admin-default-blog-appearance.inc.php:2
+#: admin/admin.php:33
+#: admin/admin.php:46
+#@ default-blog-options
+msgid "Appearance"
+msgstr "Design"
+
+#: admin/admin-default-blog-appearance.inc.php:3
+#@ default-blog-options
+msgid "Select the appearance settings which have to be copied from default blog into a new blog."
+msgstr "Wählen Sie die Design Einstellungen, welche von der Blogvorlage in die neuen Blogs kopiert werden sollen."
+
+#: admin/admin-default-blog-appearance.inc.php:19
+#: admin/admin-default-blog-plugins.inc.php:16
+#: admin/admin-default-blog-settings.inc.php:20
+#: components/settings/functions.php:14
+#@ default-blog-options
+msgid "Setting"
+msgstr "Einstellung"
+
+#: admin/admin-default-blog-appearance.inc.php:20
+#: admin/admin-default-blog-options.inc.php:16
+#: admin/admin-default-blog-settings.inc.php:21
+#: components/options/functions.php:22
+#@ default-blog-options
+msgid "Value"
+msgstr "Wert"
+
+#: admin/admin-default-blog-appearance.inc.php:21
+#: admin/admin-default-blog-cats.inc.php:37
+#: admin/admin-default-blog-links.inc.php:24
+#: admin/admin-default-blog-options.inc.php:17
+#: admin/admin-default-blog-pages.inc.php:25
+#: admin/admin-default-blog-plugins.inc.php:18
+#: admin/admin-default-blog-posts.inc.php:25
+#: admin/admin-default-blog-settings.inc.php:22
+#: admin/admin-default-blog-tags.inc.php:32
+#@ default-blog-options
+msgid "Take it (checked)"
+msgstr "Übernehmen"
+
+#: admin/admin-default-blog-appearance.inc.php:24
+#@ default-blog-options
+msgid "Set up Theme"
+msgstr "Theme setzen"
+
+#: admin/admin-default-blog-appearance.inc.php:35
+#: admin/admin-default-blog-cats.inc.php:76
+#: admin/admin-default-blog-defblog.php:30
+#: admin/admin-default-blog-links.inc.php:57
+#: admin/admin-default-blog-options.inc.php:61
+#: admin/admin-default-blog-pages.inc.php:64
+#: admin/admin-default-blog-plugins.inc.php:32
+#: admin/admin-default-blog-posts.inc.php:62
+#: admin/admin-default-blog-settings.inc.php:44
+#: admin/admin-default-blog-tags.inc.php:78
+#@ default-blog-options
+msgid "Update"
+msgstr "Speichern"
+
+#: admin/admin-default-blog-links.inc.php:2
+#@ default-blog-options
+msgid "Blog links"
+msgstr "Blog Links"
+
+#: admin/admin-default-blog-links.inc.php:3
+#@ default-blog-options
+msgid "Select the links which have to be copied from default blog into a new blog."
+msgstr "Wählen Sie die Links, welche von der Blogvorlage in die neuen Blogs kopiert werden sollen."
+
+#: admin/admin-default-blog-links.inc.php:22
+#@ default-blog-options
+msgid "Link"
+msgstr "Link"
+
+#: admin/admin-default-blog-links.inc.php:23
+#: components/links/functions.php:22
+#@ default-blog-options
+msgid "URL"
+msgstr "URL"
+
+#: admin/admin-default-blog-links.inc.php:28
+#@ default-blog-options
+msgid "Delete existing links"
+msgstr "Lösche bereits existierende Links"
+
+#: admin/admin-default-blog-pages.inc.php:2
+#@ default-blog-options
+msgid "Blog pages"
+msgstr "Blog Seiten"
+
+#: admin/admin-default-blog-pages.inc.php:3
+#@ default-blog-options
+msgid "Select the pages which have to be copied from default blog into a new blog."
+msgstr "Wählen Sie die Seiten, welche von der Blogvorlage in die neuen Blogs kopiert werden sollen."
+
+#: admin/admin-default-blog-pages.inc.php:22
+#@ default-blog-options
+msgid "Page"
+msgstr "Seite"
+
+#: admin/admin-default-blog-pages.inc.php:23
+#: admin/admin-default-blog-posts.inc.php:23
+#: components/posts/functions.php:34
+#@ default-blog-options
+msgid "Status"
+msgstr "Status"
+
+#: admin/admin-default-blog-cats.inc.php:36
+#: admin/admin-default-blog-pages.inc.php:24
+#: admin/admin-default-blog-posts.inc.php:24
+#: admin/admin-default-blog-tags.inc.php:31
+#@ default-blog-options
+msgid "Slug"
+msgstr "Slug"
+
+#: admin/admin-default-blog-pages.inc.php:29
+#@ default-blog-options
+msgid "Delete existing pages"
+msgstr "Lösche bereits existierende Seiten"
+
+#: admin/admin-default-blog-plugins.inc.php:2
+#: admin/admin.php:34
+#: admin/admin.php:47
+#: components/settings/functions.php:39
+#@ default-blog-options
+msgid "Plugins"
+msgstr "Plugins"
+
+#: admin/admin-default-blog-plugins.inc.php:3
+#@ default-blog-options
+msgid "Select the plugin settings which have to be copied from default blog into a new blog."
+msgstr "Wählen Sie die Plugin Einstellungen, welche von der Blogvorlage in die neuen Blogs kopiert werden sollen."
+
+#: admin/admin-default-blog-plugins.inc.php:21
+#@ default-blog-options
+msgid "Activate Plugins"
+msgstr "Aktiviere Plugins"
+
+#: admin/admin-default-blog-posts.inc.php:2
+#@ default-blog-options
+msgid "Blog posts"
+msgstr "Blog Artikel"
+
+#: admin/admin-default-blog-posts.inc.php:3
+#@ default-blog-options
+msgid "Select the posts which have to be copied from default blog into a new blog."
+msgstr "Wählen Sie die Artikel, welche von der Blogvorlage in die neuen Blogs kopiert werden sollen."
+
+#: admin/admin-default-blog-posts.inc.php:22
+#@ default-blog-options
+msgid "Post"
+msgstr "Artikel"
+
+#: admin/admin-default-blog-posts.inc.php:29
+#@ default-blog-options
+msgid "Delete existing posts"
+msgstr "Lösche bereits existierende Artikel"
+
+#: admin/admin-default-blog-tags.inc.php:2
+#@ default-blog-options
+msgid "Blog tags"
+msgstr "Blog Schlagwörter"
+
+#: admin/admin-default-blog-tags.inc.php:3
+#@ default-blog-options
+msgid "Select the tags which have to be copied from default blog into a new blog."
+msgstr "Wählen Sie die Tags, welche von der Blogvorlage in die neuen Blogs kopiert werden sollen."
+
+#: admin/admin-default-blog-tags.inc.php:30
+#@ default-blog-options
+msgid "Tag"
+msgstr "Schlagwort"
+
+#: admin/admin-default-blog-tags.inc.php:72
+#@ default-blog-options
+msgid "No tags found."
+msgstr "Keine Schlagwörter gefunden."
+
+#: admin/admin-default-blog-options.inc.php:2
+#@ default-blog-options
+msgid "Blog options"
+msgstr "Blog Optionen"
+
+#: admin/admin-default-blog-options.inc.php:3
+#@ default-blog-options
+msgid "Select the blog options which have to be copied from default blog into a new blog."
+msgstr "Wählen Sie die Blogoptionen, welche von der Blogvorlage in die neuen Blogs kopiert werden sollen."
+
+#: admin/admin-default-blog-options.inc.php:15
+#@ default-blog-options
+msgid "Option"
+msgstr "Option"
+
+#: admin/admin-default-blog-settings.inc.php:2
+#@ default-blog-options
+msgid "Blog settings"
+msgstr "Blog Einstellungen"
+
+#: admin/admin-default-blog-settings.inc.php:3
+#@ default-blog-options
+msgid "Select the settings which have to be copied from default blog into a new blog."
+msgstr "Wählen Sie die Einstellungen, welche von der Blogvorlage in die neuen Blogs kopiert werden sollen."
+
+#: admin/admin-default-blog-settings.inc.php:25
+#@ default-blog-options
+msgid "Welcome page"
+msgstr "Startseite"
+
+#: admin/admin-default-blog-settings.inc.php:36
+#@ default-blog-options
+msgid "N/A"
+msgstr "Nicht verfügbar."
+
+#: admin/admin-default-blog-settings.inc.php:37
+#@ default-blog-options
+msgid "No start page set."
+msgstr "Startseite nicht gesetzt."
+
+#: admin/admin-default-blog-defblog.php:2
+#@ default-blog-options
+msgid "Select blog template"
+msgstr "Wählen Sie einen Blog als Vorlage"
+
+#: admin/admin-default-blog-defblog.php:6
+#@ default-blog-options
+msgid "Please select a blog where data have to be copied from."
+msgstr "Wählen Sie eine Blogvorlage aus, aus der die Einstellungen kopiert werden sollen."
+
+#: admin/admin-default-blog-defblog.php:16
+#: components/blog-template/functions.php:73
+#@ default-blog-options
+msgid "Please select a blog"
+msgstr "Wählen Sie einen Blog"
+
+#: admin/admin-default-blog-cats.inc.php:2
+#@ default-blog-options
+msgid "Blog categories"
+msgstr "Blog Kategorien"
+
+#: admin/admin-default-blog-cats.inc.php:3
+#@ default-blog-options
+msgid "Select the categories which have to be copied from default blog into a new blog."
+msgstr "Wählen Sie die Kategorien, welche von der Blogvorlage in die neuen Blogs kopiert werden sollen."
+
+#: admin/admin-default-blog-cats.inc.php:35
+#@ default-blog-options
+msgid "Category"
+msgstr "Kategorie"
+
+#: admin/admin.php:28
+#: admin/admin.php:41
+#@ default-blog-options
+msgid "Posts"
+msgstr "Artikel"
+
+#: admin/admin.php:29
+#: admin/admin.php:42
+#@ default-blog-options
+msgid "Categories"
+msgstr "Kategorien"
+
+#: admin/admin.php:30
+#: admin/admin.php:43
+#@ default-blog-options
+msgid "Tags"
+msgstr "Schlagwörter"
+
+#: admin/admin.php:31
+#: admin/admin.php:44
+#: components/links/functions.php:3
+#@ default-blog-options
+msgid "Links"
+msgstr "Links"
+
+#: admin/admin.php:32
+#: admin/admin.php:45
+#@ default-blog-options
+msgid "Pages"
+msgstr "Seiten"
+
+#: admin/admin.php:35
+#: admin/admin.php:48
+#: components/settings/functions.php:3
+#@ default-blog-options
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: admin/admin.php:36
+#: admin/admin.php:49
+#@ default-blog-options
+msgid "Options table (Expert modus)"
+msgstr "Options Tabelle (Expertenmodus)"
+
+#: admin.php:32
+#@ default-blog-options
+msgid "Save Settings"
+msgstr ""
+
+#: admin.php:39
+#@ default-blog-options
+msgid "Create your Blog Template and setup which things you want to copy to new created blogs."
+msgstr ""
+
+#: components/blog-template/functions.php:3
+#@ default-blog-options
+msgid "Template Settings"
+msgstr ""
+
+#: components/blog-template/functions.php:13
+#@ default-blog-options
+msgid "No Template have been created yet. Please create one to go further."
+msgstr ""
+
+#: components/blog-template/functions.php:16
+#@ default-blog-options
+msgid "Please select an Template which you want to edit to go further."
+msgstr ""
+
+#: components/blog-template/functions.php:19
+#@ default-blog-options
+msgid "Templates"
+msgstr ""
+
+#: components/blog-template/functions.php:24
+#@ default-blog-options
+msgid "Template"
+msgstr ""
+
+#: components/blog-template/functions.php:25
+#@ default-blog-options
+msgid "Blog"
+msgstr ""
+
+#: components/blog-template/functions.php:26
+#@ default-blog-options
+msgid "Edit Template"
+msgstr ""
+
+#: components/blog-template/functions.php:27
+#@ default-blog-options
+msgid "Select as Default Template for new created blogs"
+msgstr ""
+
+#: components/blog-template/functions.php:63
+#@ default-blog-options
+msgid "Create Blog Template"
+msgstr ""
+
+#: components/blog-template/functions.php:65
+#@ default-blog-options
+msgid "Template name"
+msgstr ""
+
+#: components/blog-template/functions.php:69
+#@ default-blog-options
+msgid "Select a Blog"
+msgstr ""
+
+#: components/blog-template/functions.php:81
+#@ default-blog-options
+msgid "Add new Template"
+msgstr ""
+
+#: components/links/functions.php:21
+#: components/options/functions.php:21
+#@ default-blog-options
+msgid "Name"
+msgstr ""
+
+#: components/links/functions.php:23
+#: components/options/functions.php:23
+#: components/posts/functions.php:35
+#@ default-blog-options
+msgid "Copy"
+msgstr ""
+
+#: components/options/functions.php:3
+#@ default-blog-options
+msgid "Blog Options"
+msgstr ""
+
+#: components/posts/functions.php:3
+#@ default-blog-options
+msgid "Post Types"
+msgstr ""
+
+#: components/posts/functions.php:33
+#@ default-blog-options
+msgid "Title"
+msgstr ""
+
+#: components/posts/functions.php:38
+#@ default-blog-options
+msgid "Comments"
+msgstr ""
+
+#: components/posts/functions.php:77
+#@ default-blog-options
+msgctxt "Post status"
+msgid "New"
+msgstr ""
+
+#: components/posts/functions.php:80
+#@ default-blog-options
+msgctxt "Post status"
+msgid "Published"
+msgstr ""
+
+#: components/posts/functions.php:83
+#@ default-blog-options
+msgctxt "Post status"
+msgid "Pending"
+msgstr ""
+
+#: components/posts/functions.php:86
+#@ default-blog-options
+msgctxt "Post status"
+msgid "Draft"
+msgstr ""
+
+#: components/posts/functions.php:89
+#@ default-blog-options
+msgctxt "Post status"
+msgid "Auto Draft"
+msgstr ""
+
+#: components/posts/functions.php:92
+#@ default-blog-options
+msgctxt "Post status"
+msgid "Future"
+msgstr ""
+
+#: components/posts/functions.php:95
+#@ default-blog-options
+msgctxt "Post status"
+msgid "Private"
+msgstr ""
+
+#: components/posts/functions.php:98
+#@ default-blog-options
+msgctxt "Post status"
+msgid "Inherit"
+msgstr ""
+
+#: components/posts/functions.php:101
+#@ default-blog-options
+msgctxt "Post status"
+msgid "Trash"
+msgstr ""
+
+#: components/settings/functions.php:15
+#@ default-blog-options
+msgid "Action"
+msgstr ""
+
+#: components/settings/functions.php:16
+#@ default-blog-options
+msgid "Do this"
+msgstr ""
+
+#: components/settings/functions.php:28
+#@ default-blog-options
+msgid "Theme"
+msgstr ""
+
+#: components/settings/functions.php:29
+#, php-format
+#@ default
+msgid "Set up Theme and Theme settings of \"%s\" theme."
+msgstr ""
+
+#: components/settings/functions.php:40
+#@ default
+msgid "Activate all Plugins like in Blog Template."
+msgstr ""
+
+#: includes/tkf/wml-parser.php:114
+#: includes/tkf/wml-parser.php:140
+#: includes/tkf/wml-parser.php:143
+#@ tkf
+msgid "WML Document error: "
+msgstr ""
+
+#: includes/tkf/wml-parser.php:114
+#@ tkf
+msgid "File not found! Be sure, the full document path is given."
+msgstr ""
+
+#: includes/tkf/wml-parser.php:429
+#: includes/tkf/wml-parser.php:496
+#@ tkf
+msgid "Go to this topic in our Knowledge Base"
+msgstr ""
+
+#: includes/tkf/wml-parser.php:429
+#: includes/tkf/wml-parser.php:496
+#@ tkf
+msgid "More help"
+msgstr ""
+
+#: includes/tkf/wp/admin-page.php:166
+#@ default-blog-options
+msgid "page_title"
+msgstr ""
+
+#: includes/tkf/wp/admin-page.php:167
+#@ default-blog-options
+msgid "menu_title"
+msgstr ""
+
+#: includes/tkf/wp/form-fileuploader.php:2
+#@ default
+msgid "Browse ..."
+msgstr ""
+
+#: includes/tkf/wp/import.php:70
+#@ tkf
+msgid "Import settings"
+msgstr ""
+

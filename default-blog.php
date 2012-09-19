@@ -5,7 +5,7 @@ Plugin URI: http://wordpress.org/extend/plugins/default-blog-options/
 Description: Create new blogs with values like Posts, Pages, Theme settings, Blog options ... from a default blog made by you.
 Author: Sven Lehnert, Sven Wagener
 Author URI: http://www.rheinschmiede.de
-Version: 0.4.1
+Version: 1.0 alpha
 License: (GNU General Public License 3.0 (GPL) http://www.gnu.org/licenses/gpl.html)
 Copyright: Sven Wagener
 */
@@ -16,137 +16,211 @@ WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 ***********************************************************************/
 
-$defblog_name=__('Default Blog','default-blog-options');
-
-$defblog_plugin_path=dirname(__FILE__);
-include($defblog_plugin_path."/functions.inc.php");
-include($defblog_plugin_path."/ui/functions_layout.inc.php");
-include($defblog_plugin_path."/lib/io.inc.php");
-include($defblog_plugin_path."/admin/admin.php");
-if(file_exists($defblog_plugin_path."/extended.inc.php")){include($defblog_plugin_path."/extended.inc.php");}else{include($defblog_plugin_path."/standard.inc.php");}
-
-global $defblog_name;
-global $defblog_plugin_path;
-global $defblog_settings;
-global $defblog_templates;
-
-global $cat_changes;
-
-// Getting settings for plugin
-defblog_vars();
-
-// Installing plugin
-register_activation_hook(__FILE__,'initialize_plugin');
-
-// Adding menue if WP main blog is active
-add_action('admin_head','defblog_css');
-add_action('admin_head','ajaxui_css');
-add_action('admin_menu', 'add_blog_menue_page');
-add_action('wpmu_new_blog', 'initialise_blog');
-add_action('init','ajaxui_js');
-
-$plugin_dir = basename(dirname(__FILE__))."/lang/";
-load_plugin_textdomain( 'default-blog-options', 'wp-content/plugins/' . $plugin_dir, $plugin_dir );
-
-// Add a new top-level menu 
-function add_blog_menue_page() {
-	add_submenu_page('wpmu-admin.php', 'Default Blog', 'Default Blog', 10, 'defaultblog', 'default_blog');
-}
-
-// Saving settings from admin form
-function default_blog(){
-	global $defblog_settings, $defblog_templates, $extended;
+class default_blog{
 	
-	// Save Default Blog ID
-	if (isset($_POST['defblog_submit'])) {
-		$defblog_id=$_POST['act_defblog_id'];
+	var $template_options;
+	var $templates;
+	var $components;
+	
+	function default_blog(){
+		$this->__construct();
+	}
+	function __construct(){
+		$this->constants(); // Setting general Constants
+		$this->get_options(); // Getting options
+		$this->globals(); // Setting Globals
+		$this->includes(); // Getting Includes
+		$this->components(); 
 		
-		setup_template_id($defblog_id);
+		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) ); // Loading Textdomain
+		add_action( 'admin_head', array( $this, 'admin_css' ) );
+		add_action( 'network_admin_menu', array( $this, 'admin_menu' ) );
+		add_action( 'wpmu_new_blog', array( $this, 'init_blog' ) );
 		
-		$template_id=get_template_id();
+		// Admin page
+		if( is_admin() ):
+			if( 'defaultblog' == $_GET['page'] || 'options.php' == basename( $_SERVER['REQUEST_URI'] ) ):
+				add_action( 'after_setup_theme', array( $this, 'admin_load_framework' ), 1 ); // Loading Framework
+				add_action( 'admin_init', array( $this, 'register_settings' ) );
+			endif;
+		endif;
+	}
+	
+	public function register_settings(){
+		register_setting( 'default-blog-config', DFB_OPTION_GROUP, array( $this, 'save' ) );
+	}
+	
+	public function save( $input ){
+		$plugins = get_dfb_plugins();
 		
-		if($defblog_templates[$template_id]['id']!=$_POST['act_defblog_id']){
+		if( !is_array( $plugins ) )
+			return FALSE;
 		
-			$defblog_settings['act_template_id']=$template_id;
-			update_defblog_settings($defblog_settings);
-					
-			// if($defblog_templates[$template_id]['id']==""){
-			if($extended!=true){
-				$defblog_templates[$template_id]="";
-			}
-			$defblog_templates[$template_id]['id']=$defblog_id;
-			update_defblog_templates($defblog_templates);
-			//}
+		// Doing Saving actions of Plugins
+		foreach( $plugins AS $plugin ):
+			if( function_exists( $plugin[ 'function_save' ] ) ):
+				$input = call_user_func( $plugin[ 'function_save' ], $input );
+				// echo 'Doing: ' . $plugin[ 'function_save' ] . '<br />';
+			endif;
+		endforeach;
+		
+		// Merging old and new template values
+		$old_input = get_option( DFB_OPTION_GROUP );
+		
+		if( !is_array( $input ) )
+			return FALSE;
+		
+		foreach ( $old_input AS $key => $template ):
+			if( !array_key_exists( $key, $input ) )
+				$input[ $key ] = $template;
+		endforeach;
+		
+		return $input;
+	}
+
+	public function init_blog( $to_blog_id ){
+		$plugins = get_dfb_plugins();
+		
+		foreach( $plugins AS $plugin ):
+			$this->copy_element( $plugin[ 'slug' ], DFB_TEMPLATE_BLOG_ID, $to_blog_id );
+		endforeach;
+	}
+	
+	public function copy_element( $plugin_slug, $from_blog_id, $to_blog_id, $args = array() ){
+
+		if( !in_array( $plugin_slug, get_dfb_plugin_slugs() ) )
+			return FALSE;
+		
+		$plugin = get_dfb_plugin( $plugin_slug );
+		
+		$function_copy = $plugin[ 'function_copy' ];
+		
+		if( !function_exists( $function_copy ) )
+			return FALSE;
+		
+		if( FALSE == call_user_func( $function_copy, $from_blog_id, $to_blog_id, $args ) )
+			return FALSE;
+		
+		return TRUE;
+	}
+	
+	public function includes(){
+		include_once( DFB_FOLDER . '/functions.php' ); // Functions
+		include_once( DFB_FOLDER . '/includes/tkf/loader.php' ); // Framework
+	}
+	
+	public function load_textdomain(){
+		load_plugin_textdomain( 'default-blog-options', DFB_FOLDER . '/languages/' );
+	}
+	
+	function constants(){
+		define( 'DFB_FOLDER', 	$this->get_folder() );
+		define( 'DFB_URLPATH', $this->get_url_path() );
+		define( 'DFB_OPTION_GROUP', 'dfb-option-group' ); // Option group to save data
+		define( 'DFB_TEMPLATE_OPTIONS', 'dfb-template-options' ); // Option to save template data
+		define( 'DFB_PLUGIN_OPTIONS', 'dfb-plugin-options' ); // Option to save template data
+	}
+	
+	function globals(){
+		global $default_blog_template;
+		$default_blog_template = $this->templates[ DFB_TEMPLATE_EDIT_ID ] ;
+		
+		//echo '<pre>';
+		//print_r( $default_blog_template );
+		//echo '</pre>';
+	}
+	
+	function components(){
+		$components_folder = DFB_FOLDER . '/components';
+		
+		$this->components = apply_filters( 'default_blog_components', array( 
+			'blog-template' =>  $components_folder . '/blog-template' , 
+			'posts' =>  $components_folder . '/posts' , 
+			'menus' =>  $components_folder . '/menus' , 
+			'sidebars' =>  $components_folder . '/sidebars' , 
+			'links' =>  $components_folder . '/links' , 
+			'settings' =>  $components_folder . '/settings',
+			'options' =>  $components_folder . '/options',
+		));
+		
+		foreach( $this->components AS $component_name => $component_folder ):
+			$component_functions_path = $component_folder . '/functions.php';
 			
-			defblog_vars();
-	
-			alert(__('Default Blog ID Saved!','default-blog-options'));
-		}
+			if( file_exists( $component_functions_path )  ):
+				include_once( $component_functions_path );
+			endif;
+			
+		endforeach;
 	}
-	// Save Default Blog Options
-	if (isset($_POST['submit'])){
-		
-		$template_id=get_template_id();
-		$defblog_templates[$template_id]['id']=$_POST['act_defblog_id'];
-				
-		$defblog_templates[$template_id]['posts']=$_POST['posts'];
-		$defblog_templates[$template_id]['del_posts']=$_POST['delete_existing_posts'];
-		
-		$defblog_templates[$template_id]['pages']=$_POST['pages'];
-		$defblog_templates[$template_id]['del_pages']=$_POST['delete_existing_pages'];
-		
-		$defblog_templates[$template_id]['links']=$_POST['links'];
-		$defblog_templates[$template_id]['del_links']=$_POST['delete_existing_links'];		
-		
-		$defblog_templates[$template_id]['cats']=$_POST['cats'];
-		$defblog_templates[$template_id]['del_cats']=$_POST['delete_existing_cats'];
-		
-		$defblog_templates[$template_id]['tags']=$_POST['tags'];
-		$defblog_templates[$template_id]['del_tags']=$_POST['delete_existing_tags'];
 	
-		$defblog_templates[$template_id]['appearance']=$_POST['appearance'];
-		$defblog_templates[$template_id]['settings']=$_POST['settings'];
-		$defblog_templates[$template_id]['plugins']=$_POST['plugins'];
-		$defblog_templates[$template_id]['options']=$_POST['options'];
-		
-		do_action_ref_array('defblog-submit', array(&$defblog_templates));
-				
-		update_defblog_templates($defblog_templates);
-		
-	    alert(__('Settings updatet!','default-blog-options'));
+	function admin_menu(){
+		add_submenu_page( 'settings.php', __( 'Default Blog', 'default-blog-options' ), __( 'Default Blog', 'default-blog-options' ), 'manage_options', 'defaultblog', array( $this, 'admin_page' ) );
 	}
-	// Load the options page
-	default_blog_options_page($options,$links);
+	
+	function admin_page(){
+		include_once( DFB_FOLDER . '/admin.php' );
+	}
+	
+	function admin_css(){
+		
+	}
+	
+	function admin_js(){
+		
+	}
+	
+	public function admin_load_framework(){
+		$args['jqueryui_components'] = array( 'jquery-cookies', 'jquery-ui-tabs', 'jquery-ui-accordion' );
+		tk_framework( $args );
+	}
+	
+	function get_options(){
+		if( '' == get_option( DFB_OPTION_GROUP ) ):
+			// NONSENSE NOW! Recreate section
+			$this->templates = get_site_option( 'defblog_templates' );
+			$this->settings = get_site_option( 'defblog_settings' );
+			$this->templates[ 'default_blog_id' ] = $this->settings[ 'act_template_id' ];
+		else:
+			$this->templates = get_option( DFB_OPTION_GROUP );
+			$this->template_options = get_option( DFB_TEMPLATE_OPTIONS );
+		endif;
+		
+		if( is_array( $this->templates ) )
+			define( 'DFB_TEMPLATE_ID', $this->templates[ 'dfb_template_id' ] );
+		if( is_array( $this->template_options[ DFB_TEMPLATE_ID ] ) )
+			define( 'DFB_TEMPLATE_BLOG_ID', $this->template_options[ DFB_TEMPLATE_ID ][ 'blog_id' ] );
+		
+		if( is_array( $this->templates ) )
+			define( 'DFB_TEMPLATE_EDIT_ID', $this->templates[ 'dfb_template_edit_id' ] );
+		if( is_array( $this->template_options[ DFB_TEMPLATE_EDIT_ID ] ) )
+			define( 'DFB_TEMPLATE_EDIT_BLOG_ID', $this->template_options[ DFB_TEMPLATE_EDIT_ID ][ 'blog_id' ]);
+	}
+	
+	/**
+	* Getting URL Path
+	*
+	* @package Default Blog
+	* @since 0.5
+	*
+	*/
+	private function get_url_path(){
+		$sub_path = substr( DFB_FOLDER, strlen( ABSPATH ), ( strlen( DFB_FOLDER ) ) );
+		$script_url = get_bloginfo( 'wpurl' ) . '/' . $sub_path;
+		return $script_url;
+	}
+	
+	/**
+	* Getting URL Path of theme
+	*
+	* @package Default Blog
+	* @since 0.5
+	*
+	*/
+	private function get_folder(){
+		$sub_folder = substr( dirname(__FILE__), strlen( ABSPATH ), ( strlen( dirname(__FILE__) ) - strlen( ABSPATH ) ) );
+		$script_folder = ABSPATH . $sub_folder;
+		return $script_folder;
+	}
 }
 
-// Initializing new blog 
-function initialise_blog($blog_id){
-	global $defblog_settings, $defblog_templates;
-	$defblog_id=$defblog_templates[get_template_id()]['id'];
-	
-	if($defblog_settings['init']==true && $defblog_id!=""){
-		copy_tags($defblog_id,$blog_id);
-		copy_cats($defblog_id,$blog_id);
-		copy_posts($defblog_id,$blog_id);
-		copy_pages($defblog_id,$blog_id);
-		copy_links($defblog_id,$blog_id);
-		copy_appearance($defblog_id,$blog_id);
-		copy_plugins($defblog_id,$blog_id);
-		copy_settings($defblog_id,$blog_id);
-		copy_options($defblog_id,$blog_id);
-		
-		do_action_ref_array( 'defblog-init-new-blog', array($defblog_id, $blog_id) );
-
-	}
-}
-// This script will run the first time, the plugin was started
-function initialize_plugin(){
-	global $defblog_settings;
-		
-	if($defblog_settings['init']==""){
-		$defblog_settings['init']=true;
-	    update_site_option('defblog_settings',$defblog_settings);
-	}
-}
-
-?>
+$default_blog = new default_blog();
