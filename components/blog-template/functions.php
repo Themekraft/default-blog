@@ -17,14 +17,14 @@ function default_blog_template_admin(){
 	
 	if( is_array( $dfb_template_options ) ):
 		$content.= '<h3>' . __( 'Templates', 'default-blog-options' ) . '</h3>';
-		$content.= '<p><table class="widefat">';
+		$content.= '<p><table class="wp-list-table widefat fixed posts" cellspacing="3" cellpadding="3">';
 		
 		$content.= '<thead>';
-			$content.= '<tr>';
+			$content.= '<tr valign="top">';
 				$content.= '<th>' . __( 'Template', 'default-blog-options' ) . '</th>';	
 				$content.= '<th>' . __( 'Blog', 'default-blog-options' ) .'</th>';
 				$content.= '<th>' . __( 'Edit Template', 'default-blog-options' ) .'</th>';
-				$content.= '<th>' . __( 'Select as Default Template for new created blogs', 'default-blog-options' ) .'</th>';
+				$content.= '<th colspan="2">' . __( 'Select as Default Template for new created blogs', 'default-blog-options' ) .'</th>';
 	        $content.= '</tr>';
 		$content.= '</thead>';
 		
@@ -47,6 +47,7 @@ function default_blog_template_admin(){
 					$content.= '<td>' . get_blog_option( $template_options['blog_id'], 'blogname' ) .'</td>';
 					$content.= '<td><input type="radio" name="' . DFB_OPTION_GROUP . '[dfb_template_edit_id]" value="' . $template_options[ 'template_id' ] . '"' . $checked_template . ' /></td>';
 					$content.= '<td><input type="radio" name="' . DFB_OPTION_GROUP . '[dfb_template_id]" value="' . $template_options[ 'template_id' ] . '"' . $checked_default_blog . ' /></td>';
+					$content.= '<td><a href="#" class="button delete_template" rel="' . $template_options[ 'template_id' ] . '" />' . __( 'Delete Template', 'default-blog-options' ) . '</a></td>';
 					$content.= '';
 		        $content.= '</tr>';
 			endif;
@@ -78,6 +79,8 @@ function default_blog_template_admin(){
 
     $content.= '</select></p>';
 	
+	$content.='<input type="hidden" name="delete_template_id" id="delete_template_id" />';
+	
 	$content.= tk_form_button( __( 'Add new Template', 'default-blog-options' ), array( 'name' => 'new_template' ), 'html' );
 	
 	$content = apply_filters( 'default-blog-template-admin', $content );
@@ -88,10 +91,9 @@ function default_blog_template_admin(){
 }
 
 function default_blog_template_save( $input ){
+	$dfb_template_options = get_option( DFB_TEMPLATE_OPTIONS );
 	
 	if( isset( $_REQUEST[ 'new_template' ] ) && 'none' != $input[ 'create_blog_id' ] && '' != $input[ 'create_blog_template_name' ] ):
-		
-		$dfb_template_options = get_option( DFB_TEMPLATE_OPTIONS );
 		
 		if( is_array( $dfb_template_options ) ):
 			$last_inserted_id = $dfb_template_options[ 'last_inserted_id' ];
@@ -111,8 +113,20 @@ function default_blog_template_save( $input ){
 		$dfb_template_options[ 'last_inserted_id' ] = $template_id;
 		
 		update_option( DFB_TEMPLATE_OPTIONS, $dfb_template_options );
+		
+	elseif( '' != $_REQUEST[ 'delete_template_id' ] ):
+		
+		foreach ( $dfb_template_options AS $key => $template ):
+			if( $template[ 'template_id' ] == $_REQUEST[ 'delete_template_id' ] ):
+				unset( $dfb_template_options[ $key ] );
+				break;
+			endif;
+		endforeach;
+		
+		update_option( DFB_TEMPLATE_OPTIONS, $dfb_template_options );
 	endif;
 	
+	unset( $input[ 'delete_template_id' ] );
 	unset( $input[ 'create_blog_id' ] );
 	unset( $input[ 'create_blog_template_name' ] );
 	
