@@ -63,25 +63,34 @@ function default_blog_template_admin(){
 	
 	$content.= '<h3>' . __( 'Create Blog Template', 'default-blog-options' ) . '</h3>';
 	
-	$content.= '<label for="create_blog_template_name">' . __( 'Template name', 'default-blog-options' ) . '</label>';
+	$content.= '<p><table class="wp-list-table widefat fixed posts" cellspacing="3" cellpadding="3">';
+	$content.= '<tbody>';
+		$content.= '<tr>';
+			
+		$content.= '<td><label for="create_blog_template_name">' . __( 'Template name', 'default-blog-options' ) . '</label>';
+		
+		$content.= '<p><input type="text" id="create_blog_template_name" name="' . DFB_OPTION_GROUP . '[create_blog_template_name]" /></p></td>';
+		
+		$content.= '<td><label for="create_blog_template_name">' . __( 'Select a Blog', 'default-blog-options' ) . '</label>';
+		
+		$content.= '<p><select id="create_blog_id" name="' . DFB_OPTION_GROUP . '[create_blog_id]">';
+		
+		$content.= '<option selected value="none">' . __( 'Please select a blog', 'default-blog-options' ) . '</option>\n';
+	 
+	    foreach( $blogs AS $blog ):
+			$content.= '<option value="' . $blog['blog_id'] . '">' . get_blog_option( $blog['blog_id'], 'blogname' ) . '</option>\n';
+	    endforeach;
 	
-	$content.= '<p><input type="text" id="create_blog_template_name" name="' . DFB_OPTION_GROUP . '[create_blog_template_name]" /></p>';
-	
-	$content.= '<label for="create_blog_template_name">' . __( 'Select a Blog', 'default-blog-options' ) . '</label>';
-	
-	$content.= '<p><select id="create_blog_id" name="' . DFB_OPTION_GROUP . '[create_blog_id]">';
-	
-	$content.= '<option selected value="none">' . __( 'Please select a blog', 'default-blog-options' ) . '</option>\n';
- 
-    foreach( $blogs AS $blog ):
-		$content.= '<option value="' . $blog['blog_id'] . '">' . get_blog_option( $blog['blog_id'], 'blogname' ) . '</option>\n';
-    endforeach;
-
-    $content.= '</select></p>';
+	    $content.= '</select></p></td>';
+		
+		$content.= '<td>' . tk_form_button( __( 'Add new Template', 'default-blog-options' ), array( 'name' => 'new_template' ), 'html' ) . '</td>';
+		
+		$content.= '</tr>';
+		
+	$content.= '</tbody>';
+	$content.= '</table></p>';
 	
 	$content.='<input type="hidden" name="delete_template_id" id="delete_template_id" />';
-	
-	$content.= tk_form_button( __( 'Add new Template', 'default-blog-options' ), array( 'name' => 'new_template' ), 'html' );
 	
 	$content = apply_filters( 'default-blog-template-admin', $content );
 	
