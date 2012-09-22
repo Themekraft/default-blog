@@ -33,7 +33,6 @@ class default_blog{
 		$this->components(); 
 		
 		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) ); // Loading Textdomain
-		add_action( 'admin_head', array( $this, 'admin_css' ) );
 		add_action( 'network_admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'wpmu_new_blog', array( $this, 'init_blog' ) );
 		
@@ -41,7 +40,11 @@ class default_blog{
 		if( is_admin() ):
 			if( 'defaultblog' == $_GET['page'] || 'options.php' == basename( $_SERVER['REQUEST_URI'] ) ):
 				add_action( 'after_setup_theme', array( $this, 'admin_load_framework' ), 1 ); // Loading Framework
+				
 				add_action( 'admin_init', array( $this, 'register_settings' ) );
+				add_action( 'admin_head', array( $this, 'admin_css' ) );
+				add_action( 'admin_init',  array( $this, 'admin_js' ));
+				add_action( 'admin_head',  array( $this, 'admin_js_vars' ));
 			endif;
 		endif;
 	}
@@ -154,7 +157,7 @@ class default_blog{
 	}
 	
 	function admin_menu(){
-		add_submenu_page( 'settings.php', __( 'Default Blog', 'default-blog-options' ), __( 'Default Blog', 'default-blog-options' ), 'manage_options', 'defaultblog', array( $this, 'admin_page' ) );
+		add_submenu_page( 'sites.php', __( 'Default Blog', 'default-blog-options' ), __( 'Default Blog', 'default-blog-options' ), 'manage_options', 'defaultblog', array( $this, 'admin_page' ) );
 	}
 	
 	function admin_page(){
@@ -162,11 +165,21 @@ class default_blog{
 	}
 	
 	function admin_css(){
-		
+		wp_register_style( 'default-blog-admin-css', DFB_URLPATH . '/admin.css' );
+		wp_enqueue_style( 'default-blog-admin-css' );
 	}
 	
 	function admin_js(){
-		
+		wp_register_script( 'default-blog-js', DFB_URLPATH . '/admin.js' ); // General Theme JS
+		wp_enqueue_script( 'default-blog-js' );	
+	}
+
+	public function admin_js_vars(){
+		$content = '<script type="text/javascript">' . chr(13);
+		$content.= '// Text strings for default Blog' . chr(13);
+		$content.= 'var dfb_txt_delete_template_question = "' . __( 'Do you really want to delete this template?', 'default-blog-options' ) . '";' . chr(13);
+		$content.= '</script>' . chr(13);
+		echo $content;
 	}
 	
 	public function admin_load_framework(){
