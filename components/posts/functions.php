@@ -584,6 +584,10 @@ function default_blog_copy_term( $term_id, $taxonomy_name, $from_blog_id, $to_bl
 	$new_term = wp_insert_term( $term[ 'name' ], $taxonomy_name, $term );
 	restore_current_blog();
 	
+	// Return have to be Array, else it's an error
+	if( is_object( $new_term ) )
+		return FALSE;
+	
 	$default_blog_term_relations[ $term_id ] = $new_term[ 'term_id' ];
 	
 	return $new_term;
