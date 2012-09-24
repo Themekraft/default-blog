@@ -188,15 +188,33 @@ class default_blog{
 	}
 	
 	function get_options(){
+		
+		$templates_old = get_site_option( 'defblog_templates' );
+		$settings_old = get_site_option( 'defblog_settings' );
+			
 		if( '' == get_option( DFB_OPTION_GROUP ) ):
 			// NONSENSE NOW! Recreate section
-			$this->templates = get_site_option( 'defblog_templates' );
-			$this->settings = get_site_option( 'defblog_settings' );
 			$this->templates[ 'default_blog_id' ] = $this->settings[ 'act_template_id' ];
 		else:
 			$this->templates = get_option( DFB_OPTION_GROUP );
 			$this->template_options = get_option( DFB_TEMPLATE_OPTIONS );
 		endif;
+		
+		echo '<br />Templates old<pre>';
+		print_r( $templates_old );
+		echo '</pre>';
+		
+		echo '<br />Settings old<pre>';
+		print_r( $settings_old );
+		echo '</pre>';
+		
+		echo '<br />Templates:<pre>';
+		print_r( $this->templates );
+		echo '</pre>';
+		
+		echo '<br />Template Options:<pre>';
+		print_r( $this->template_options );
+		echo '</pre>';
 		
 		if( is_array( $this->templates ) )
 			define( 'DFB_TEMPLATE_ID', $this->templates[ 'dfb_template_id' ] );
