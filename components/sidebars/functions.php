@@ -158,15 +158,17 @@ function default_blog_sidebars_copy( $from_blog_id, $to_blog_id ){
 		
 					switch_to_blog( $from_blog_id );
 					$widget_option = get_option( 'widget_' . $widget_name );
-					restore_current_blog();	
+					restore_current_blog();
 					
-					foreach( $widget_option AS $key => $option ):
-						if( is_int( $key ) ):
-							// Rewrite settings for Nav Menu
-							if( 'nav_menu' == $widget_name )
-								$widget_option[ $key ][ 'nav_menu' ] = $default_blog_menu_references[ $widget_option[ $key ][ 'nav_menu' ] ];
-						endif;
-					endforeach;
+					if( is_array( $widget_option ) ):
+						foreach( $widget_option AS $key => $option ):
+							if( is_int( $key ) ):
+								// Rewrite settings for Nav Menu
+								if( 'nav_menu' == $widget_name )
+									$widget_option[ $key ][ 'nav_menu' ] = $default_blog_menu_references[ $widget_option[ $key ][ 'nav_menu' ] ];
+							endif;
+						endforeach;
+					endif;
 					
 					switch_to_blog( $to_blog_id );
 					update_option( 'widget_' . $widget_name, $widget_option );

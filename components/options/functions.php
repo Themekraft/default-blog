@@ -63,29 +63,31 @@ function default_blog_options_copy( $from_blog_id, $to_blog_id ){
 	
 	$options = $default_blog_template[ 'options' ];
 	
-	foreach( $options AS $option ):
-		switch_to_blog( $to_blog_id );
-			
-			if( 'permalink_structure' == $option ):
-				$wp_rewrite->set_permalink_structure( get_blog_option( $from_blog_id, $option ) );
-			
-			elseif( 'category_base' == $option ):
-				$wp_rewrite->set_category_base( get_blog_option( $from_blog_id, $option ) );
+	if( is_array( $options ) ):
+		foreach( $options AS $option ):
+			switch_to_blog( $to_blog_id );
 				
-			elseif( 'tag_base' == $option  ):
-				$wp_rewrite->set_tag_base( get_blog_option( $from_blog_id, $option ) );
+				if( 'permalink_structure' == $option ):
+					$wp_rewrite->set_permalink_structure( get_blog_option( $from_blog_id, $option ) );
 				
-			else:
-				update_option( $option, get_blog_option( $from_blog_id, $option ) );
+				elseif( 'category_base' == $option ):
+					$wp_rewrite->set_category_base( get_blog_option( $from_blog_id, $option ) );
+					
+				elseif( 'tag_base' == $option  ):
+					$wp_rewrite->set_tag_base( get_blog_option( $from_blog_id, $option ) );
+					
+				else:
+					update_option( $option, get_blog_option( $from_blog_id, $option ) );
+					
+				endif;
 				
-			endif;
-			
-			create_initial_taxonomies();
-			
-			$wp_rewrite->flush_rules();
-			
-		restore_current_blog();
-	endforeach;
+				create_initial_taxonomies();
+				
+				$wp_rewrite->flush_rules();
+				
+			restore_current_blog();
+		endforeach;
+	endif;
 }
 
 function default_blog_options_save( $input ){

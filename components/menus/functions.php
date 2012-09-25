@@ -26,66 +26,77 @@ function default_blog_menus_admin(){
 	$content.= '</thead>';
 	
 	$content.= '<tbody>';
-	foreach( $nav_menus AS $nav_menu ):
-		$nav_menu_checked = '';
-		
-		// Is Nav Menu checked for a copy?
-		if( is_array( $checked_nav_menus ) )
-			if( in_array(  $nav_menu->term_id, $checked_nav_menus ) ) 
-				$nav_menu_checked = ' checked';
-		
+	
+	if( is_array( $nav_menus ) && count( $nav_menus ) > 0 ):
+		foreach( $nav_menus AS $nav_menu ):
+			$nav_menu_checked = '';
+			
+			// Is Nav Menu checked for a copy?
+			if( is_array( $checked_nav_menus ) )
+				if( in_array(  $nav_menu->term_id, $checked_nav_menus ) ) 
+					$nav_menu_checked = ' checked';
+			
+			$content.= '<tr>';
+				$content.= '<td>' . $nav_menu->name . '</td>';	
+				$content.= '<td><input type="checkbox" name="' . DFB_OPTION_GROUP . '[' . DFB_TEMPLATE_EDIT_ID . '][nav_menu][]" value="' . $nav_menu->term_id . '"' . $nav_menu_checked . ' /></td>';
+	        $content.= '</tr>';
+		endforeach;
+	else:
 		$content.= '<tr>';
-			$content.= '<td>' . $nav_menu->name . '</td>';	
-			$content.= '<td><input type="checkbox" name="' . DFB_OPTION_GROUP . '[' . DFB_TEMPLATE_EDIT_ID . '][nav_menu][]" value="' . $nav_menu->term_id . '"' . $nav_menu_checked . ' /></td>';
+			$content.= '<td colspan="2">' . __( 'No Entry was found', 'default-blog-options' ) . '</td>';	
         $content.= '</tr>';
-	endforeach;
+	endif;
 	
 	$content.= '</tbody>';
 	$content.= '</table><br />';
 	
-	foreach( $default_blog_template[ 'nav_menu' ] AS $nav_menu_id ):
-		
-		$nav_menu = wp_get_nav_menu_object( $nav_menu_id );
-		$nav_menu_items = wp_get_nav_menu_items( $nav_menu_id );
-		$checked_nav_menu_items = $default_blog_template[ 'nav_menu_items' ][ $nav_menu_id ];
-		
-		$content_tab = '<h3>' . __( 'Menu Items', 'default-blog-options' )  . '</h3>';
-		$content_tab.= '<p>' . __( 'Select the menu items you want to copy.', 'default-blog-options' )  . '<p>';
-		
-		$content_tab.= '<table class="widefat">';
-		
-		$content_tab.= '<thead>';
-		$content_tab.= '<tr>';
-			$content_tab.= '<th>' . __( 'Title', 'default-blog-options' ) . '</th>';	
-			$content_tab.= '<th>' . __( 'Copy', 'default-blog-options' ) . '</th>';
-        $content_tab.= '</tr>';
-		$content_tab.= '</thead>';
-		
-		$content_tab.= '<tbody>';
-		
-		foreach( $nav_menu_items AS $nav_menu_item ):
-		
-			$nav_menu_item_checked = '';
+	if( is_array( $default_blog_template[ 'nav_menu' ] ) ):
+	
+		foreach( $default_blog_template[ 'nav_menu' ] AS $nav_menu_id ):
 			
-			// Is Nav Menu Item checked for a copy?
-			if( is_array( $checked_nav_menu_items ) )
-				if( in_array( $nav_menu_item->ID, $checked_nav_menu_items ) ) 
-					$nav_menu_item_checked = ' checked';
+			$nav_menu = wp_get_nav_menu_object( $nav_menu_id );
+			$nav_menu_items = wp_get_nav_menu_items( $nav_menu_id );
+			$checked_nav_menu_items = $default_blog_template[ 'nav_menu_items' ][ $nav_menu_id ];
 			
+			$content_tab = '<h3>' . __( 'Menu Items', 'default-blog-options' )  . '</h3>';
+			$content_tab.= '<p>' . __( 'Select the menu items you want to copy.', 'default-blog-options' )  . '<p>';
+			
+			$content_tab.= '<table class="widefat">';
+			
+			$content_tab.= '<thead>';
 			$content_tab.= '<tr>';
-				$content_tab.= '<td>' .$nav_menu_item->title . '</td>';	
-				$content_tab.= '<td><input type="checkbox" name="' . DFB_OPTION_GROUP . '[' . DFB_TEMPLATE_EDIT_ID . '][nav_menu_items][' . $nav_menu->term_id . '][]" value="' . $nav_menu_item->ID . '"' . $nav_menu_item_checked . ' /></td>';
+				$content_tab.= '<th>' . __( 'Title', 'default-blog-options' ) . '</th>';	
+				$content_tab.= '<th>' . __( 'Copy', 'default-blog-options' ) . '</th>';
 	        $content_tab.= '</tr>';
+			$content_tab.= '</thead>';
+			
+			$content_tab.= '<tbody>';
+			
+			foreach( $nav_menu_items AS $nav_menu_item ):
+			
+				$nav_menu_item_checked = '';
+				
+				// Is Nav Menu Item checked for a copy?
+				if( is_array( $checked_nav_menu_items ) )
+					if( in_array( $nav_menu_item->ID, $checked_nav_menu_items ) ) 
+						$nav_menu_item_checked = ' checked';
+				
+				$content_tab.= '<tr>';
+					$content_tab.= '<td>' .$nav_menu_item->title . '</td>';	
+					$content_tab.= '<td><input type="checkbox" name="' . DFB_OPTION_GROUP . '[' . DFB_TEMPLATE_EDIT_ID . '][nav_menu_items][' . $nav_menu->term_id . '][]" value="' . $nav_menu_item->ID . '"' . $nav_menu_item_checked . ' /></td>';
+		        $content_tab.= '</tr>';
+			endforeach;
+			
+			$content_tab.= '</table>';
+			
+			$elements[] = array(
+				'id' => 'dfb_' . $nav_menu->slug,
+				'title' => $nav_menu->name,
+				'content' => $content_tab
+			);	
 		endforeach;
-		
-		$content_tab.= '</table>';
-		
-		$elements[] = array(
-			'id' => 'dfb_' . $nav_menu->slug,
-			'title' => $nav_menu->name,
-			'content' => $content_tab
-		);	
-	endforeach;
+	
+	endif;
 	
 	$content.= tk_tabs( 'default_blog_menu_tabs', $elements, 'html' );
 		
@@ -103,24 +114,27 @@ function default_blog_menus_copy( $from_blog_id, $to_blog_id ){
 	
 	$checked_nav_menus = $default_blog_template[ 'nav_menu' ];
 	
-	// Copy all Nav Menus
-	foreach( $checked_nav_menus AS $nav_menu_id ):
-		
-		// Getting actual Nav Menu
-		switch_to_blog( $from_blog_id );
-		$nav_menu = wp_get_nav_menu_object( $nav_menu_id );
-		restore_current_blog();
-		
-		// Creating Nav Menu
-		switch_to_blog( $to_blog_id );
-		$new_nav_menu_id = wp_create_nav_menu( $nav_menu->name );
-		restore_current_blog();
-		
-		$default_blog_menu_references[ $nav_menu->term_id ] = $new_nav_menu_id;
-		
-		// Copy all Items of Menu
-		default_blog_copy_menu_items( $from_blog_id, $to_blog_id, $nav_menu->term_id, $new_nav_menu_id );
-	endforeach;
+	if( is_array( $checked_nav_menus ) ):
+	
+		// Copy all Nav Menus
+		foreach( $checked_nav_menus AS $nav_menu_id ):
+			
+			// Getting actual Nav Menu
+			switch_to_blog( $from_blog_id );
+			$nav_menu = wp_get_nav_menu_object( $nav_menu_id );
+			restore_current_blog();
+			
+			// Creating Nav Menu
+			switch_to_blog( $to_blog_id );
+			$new_nav_menu_id = wp_create_nav_menu( $nav_menu->name );
+			restore_current_blog();
+			
+			$default_blog_menu_references[ $nav_menu->term_id ] = $new_nav_menu_id;
+			
+			// Copy all Items of Menu
+			default_blog_copy_menu_items( $from_blog_id, $to_blog_id, $nav_menu->term_id, $new_nav_menu_id );
+		endforeach;
+	endif;
 }
 function default_blog_copy_menu_items( $from_blog_id, $to_blog_id, $from_nav_menu_id, $to_nav_menu_id, $args = array() ){
 	global $default_blog_template;
