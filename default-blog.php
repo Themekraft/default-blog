@@ -73,6 +73,9 @@ class default_blog{
 		if( !is_array( $input ) )
 			return FALSE;
 		
+		if( !is_array( $old_input ) )
+			return $input;
+		
 		foreach ( $old_input AS $key => $template ):
 			if( !array_key_exists( $key, $input ) )
 				$input[ $key ] = $template;
