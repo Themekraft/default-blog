@@ -7,10 +7,13 @@ function default_blog_options_admin(){
 	
 	switch_to_blog( DFB_TEMPLATE_EDIT_BLOG_ID );
 	
-	if( 0 != DFB_TEMPLATE_EDIT_BLOG_ID && 1 != DFB_TEMPLATE_EDIT_BLOG_ID )
-		$options_table = $wpdb->base_prefix . DFB_TEMPLATE_EDIT_BLOG_ID . '_options';
-	else
-		$options_table = $wpdb->base_prefix . 'options';
+	$options_table = $wpdb->base_prefix . DFB_TEMPLATE_EDIT_BLOG_ID . '_options';
+	
+	$options = $wpdb->get_results( "SELECT * FROM " . $options_table . " ORDER BY option_name");
+	
+	// If there is no result
+	if( count( $options ) == 0 )
+		$options_table = $wpdb->base_prefix . '_options';
 	
 	$options = $wpdb->get_results( "SELECT * FROM " . $options_table . " ORDER BY option_name");
 	
