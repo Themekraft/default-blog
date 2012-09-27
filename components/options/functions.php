@@ -45,6 +45,8 @@ function default_blog_options_admin(){
 				$content.= '<td><textarea disabled="disabled">' . $option->option_value . '</textarea></td>';
 				$content.= '<td><input type="checkbox" name="' . DFB_OPTION_GROUP . '[' . DFB_TEMPLATE_EDIT_ID . '][options][]" value="' . $option->option_name . '" ' . $checked . ' /></td>';
 			$content.= '<tr>';
+			
+			$content = apply_filters( 'default-blog-options-row', $content, $option->option_name );
 		
 		endforeach;
 		
