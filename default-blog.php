@@ -83,7 +83,7 @@ class default_blog{
 
 	public function init_blog( $to_blog_id ){
 		$plugins = get_dfb_plugins();
-		
+
 		foreach( $plugins AS $plugin ):
 			$this->copy_element( $plugin[ 'slug' ], DFB_TEMPLATE_BLOG_ID, $to_blog_id );
 		endforeach;
@@ -200,7 +200,7 @@ class default_blog{
 			$this->template_options = get_option( DFB_TEMPLATE_OPTIONS );
 		endif;
 		
-		echo '<br />Templates old<pre>';
+		/*echo '<br />Templates old<pre>';
 		print_r( $templates_old );
 		echo '</pre>';
 		
@@ -214,13 +214,15 @@ class default_blog{
 		
 		echo '<br />Template Options:<pre>';
 		print_r( $this->template_options );
-		echo '</pre>';
-		
+		echo '</pre>';*/
+
+		do_action( 'default_blog_before_options_get', $this->templates, $this->template_options );
+
 		if( is_array( $this->templates ) )
 			define( 'DFB_TEMPLATE_ID', $this->templates[ 'dfb_template_id' ] );
 		if( is_array( $this->template_options[ DFB_TEMPLATE_ID ] ) )
 			define( 'DFB_TEMPLATE_BLOG_ID', $this->template_options[ DFB_TEMPLATE_ID ][ 'blog_id' ] );
-		
+
 		if( is_array( $this->templates ) )
 			define( 'DFB_TEMPLATE_EDIT_ID', $this->templates[ 'dfb_template_edit_id' ] );
 		if( is_array( $this->template_options[ DFB_TEMPLATE_EDIT_ID ] ) )
