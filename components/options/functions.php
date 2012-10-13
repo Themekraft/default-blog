@@ -7,10 +7,13 @@ function default_blog_options_admin(){
 	
 	switch_to_blog( DFB_TEMPLATE_EDIT_BLOG_ID );
 	
-	if( 0 != DFB_TEMPLATE_EDIT_BLOG_ID && 1 != DFB_TEMPLATE_EDIT_BLOG_ID )
-		$options_table = $wpdb->base_prefix . DFB_TEMPLATE_EDIT_BLOG_ID . '_options';
-	else
-		$options_table = $wpdb->base_prefix . 'options';
+	$options_table = $wpdb->base_prefix . DFB_TEMPLATE_EDIT_BLOG_ID . '_options';
+	
+	$options = $wpdb->get_results( "SELECT * FROM " . $options_table . " ORDER BY option_name");
+	
+	// If there is no result
+	if( count( $options ) == 0 )
+		$options_table = $wpdb->base_prefix . '_options';
 	
 	$options = $wpdb->get_results( "SELECT * FROM " . $options_table . " ORDER BY option_name");
 	
@@ -42,6 +45,8 @@ function default_blog_options_admin(){
 				$content.= '<td><textarea disabled="disabled">' . $option->option_value . '</textarea></td>';
 				$content.= '<td><input type="checkbox" name="' . DFB_OPTION_GROUP . '[' . DFB_TEMPLATE_EDIT_ID . '][options][]" value="' . $option->option_name . '" ' . $checked . ' /></td>';
 			$content.= '<tr>';
+			
+			$content = apply_filters( 'default-blog-options-row', $content, $option->option_name );
 		
 		endforeach;
 		
@@ -63,29 +68,31 @@ function default_blog_options_copy( $from_blog_id, $to_blog_id ){
 	
 	$options = $default_blog_template[ 'options' ];
 	
-	foreach( $options AS $option ):
-		switch_to_blog( $to_blog_id );
-			
-			if( 'permalink_structure' == $option ):
-				$wp_rewrite->set_permalink_structure( get_blog_option( $from_blog_id, $option ) );
-			
-			elseif( 'category_base' == $option ):
-				$wp_rewrite->set_category_base( get_blog_option( $from_blog_id, $option ) );
+	if( is_array( $options ) ):
+		foreach( $options AS $option ):
+			switch_to_blog( $to_blog_id );
 				
-			elseif( 'tag_base' == $option  ):
-				$wp_rewrite->set_tag_base( get_blog_option( $from_blog_id, $option ) );
+				if( 'permalink_structure' == $option ):
+					$wp_rewrite->set_permalink_structure( get_blog_option( $from_blog_id, $option ) );
 				
-			else:
-				update_option( $option, get_blog_option( $from_blog_id, $option ) );
+				elseif( 'category_base' == $option ):
+					$wp_rewrite->set_category_base( get_blog_option( $from_blog_id, $option ) );
+					
+				elseif( 'tag_base' == $option  ):
+					$wp_rewrite->set_tag_base( get_blog_option( $from_blog_id, $option ) );
+					
+				else:
+					update_option( $option, get_blog_option( $from_blog_id, $option ) );
+					
+				endif;
 				
-			endif;
-			
-			create_initial_taxonomies();
-			
-			$wp_rewrite->flush_rules();
-			
-		restore_current_blog();
-	endforeach;
+				create_initial_taxonomies();
+				
+				$wp_rewrite->flush_rules();
+				
+			restore_current_blog();
+		endforeach;
+	endif;
 }
 
 function default_blog_options_save( $input ){

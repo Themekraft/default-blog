@@ -16,7 +16,6 @@ function default_blog_template_admin(){
 		$content.= '<p>' . __( 'Please select an Template which you want to edit to go further.', 'default-blog-options' ) . '</p>';
 	
 	if( is_array( $dfb_template_options ) ):
-		$content.= '<h3>' . __( 'Templates', 'default-blog-options' ) . '</h3>';
 		$content.= '<p><table class="wp-list-table widefat fixed posts" cellspacing="3" cellpadding="3">';
 		
 		$content.= '<thead>';
