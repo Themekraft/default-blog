@@ -13,14 +13,6 @@ function default_blog_posts_admin(){
 	
 	foreach( $post_types AS $post_type ):
 		
-		// Getting all posts of post type
-		$args = array(
-			'post_type' => $post_type->name,
-			'posts_per_page ' => -1 // Show all posts
-		);
-		
-		$the_query = new WP_Query( $args );
-		
 		// Table head
 		$content = '<h3>' . $post_type->labels->all_items . '</h3>';
 		
@@ -57,6 +49,18 @@ function default_blog_posts_admin(){
 		endif;
 			
 		$content.= '<tbody>';
+		
+		// Getting all posts of post type
+		$args = array(
+			'post_type' => $post_type->name,
+			'posts_per_page' => -1 // Show all posts
+		);
+		
+		$the_query = new WP_Query( $args );
+		
+		echo '<pre>';
+		// print_r( $the_query );
+		echo '</pre>';
 		
 		while ( $the_query->have_posts() ) : $the_query->the_post();
 			global $post;
@@ -268,7 +272,7 @@ function default_blog_posts_copy( $from_blog_id, $to_blog_id, $args = array() ){
 		// Getting all posts of post type
 		$args = array(
 			'post_type' => $post_type,
-			'posts_per_page ' => -1, // Show all posts
+			'posts_per_page' => -1, // Show all posts
 			'post__in' => $default_blog_template[ $post_type ] // Only taking selected posts
 		);
 		
