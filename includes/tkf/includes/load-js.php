@@ -46,16 +46,21 @@ class TK_Jqueryui{
 	 * @param array $args Array of [ $css Put on false if no css should be included ]
 	 */
 	function load_jqueryui( $components = array (), $args = array() ){
+		/*
 		if( count( $components ) == 0 ){
 			$components = array_merge( $this->known_components, $this->wp_components );
 		}
+		*/
 		
 		$defaults = array(
 			'css' => 'true'
 		);
 		
-		$args = wp_parse_args($args, $defaults);
+		$args = wp_parse_args( $args, $defaults );
 		extract( $args , EXTR_SKIP );
+		
+		if( !is_array( $components) )
+			return FALSE;
 		
 		if( defined( 'BP_VERSION' ) && in_array( 'jquery-ui-accordion', $components ) ){
 			wp_deregister_script( 'dtheme-ajax-js' ); // For Buddypress bug on accordion
