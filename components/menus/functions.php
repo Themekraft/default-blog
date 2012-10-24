@@ -134,6 +134,22 @@ function default_blog_menus_copy( $from_blog_id, $to_blog_id ){
 			// Copy all Items of Menu
 			default_blog_copy_menu_items( $from_blog_id, $to_blog_id, $nav_menu->term_id, $new_nav_menu_id );
 		endforeach;
+		
+		// Setting up nav menu locations
+		switch_to_blog( $from_blog_id );
+		$nav_menu_locations = get_theme_mod( 'nav_menu_locations' );
+		restore_current_blog();
+		
+		// Writing new Ids in Nav location Array
+		foreach( $nav_menu_locations AS $nav_menu_name => $nav_menu_location ):
+			$nav_menu_locations[ $nav_menu_name ] = $default_blog_menu_references[ $nav_menu_locations[ $nav_menu_name ] ];
+		endforeach;
+		
+		// Saving nav menu locations to new blog
+		switch_to_blog( $to_blog_id );
+		set_theme_mod( 'nav_menu_locations', $nav_menu_locations );
+		restore_current_blog();
+		
 	endif;
 }
 function default_blog_copy_menu_items( $from_blog_id, $to_blog_id, $from_nav_menu_id, $to_nav_menu_id, $args = array() ){
@@ -190,13 +206,13 @@ function default_blog_copy_menu_item( $from_blog_id, $to_blog_id, $from_nav_menu
 			'menu-item-parent-id' => $nav_menu_item_post->menu_item_parent,
 			'menu-item-position' => $nav_menu_item_post->menu_order,
 			'menu-item-type' => $nav_menu_item_post->type,
-			'menu-item-title' => $nav_menu_item_post->title,
-			'menu-item-url' => $nav_menu_item_post->url,
-			'menu-item-description' =>  $nav_menu_item_post->description,
-			'menu-item-attr-title' => $nav_menu_item_post->attr_title,
-			'menu-item-target' =>  $nav_menu_item_post->target,
-			'menu-item-classes' => implode( ' ', $nav_menu_item_post->classes ),
-			'menu-item-xfn' => $nav_menu_item_post->xfn,
+			'menu-item-title' => apply_filters( 'dfb_menu_item_title', $nav_menu_item_post->title, $from_blog_id, $to_blog_id, $menu_item_id ),
+			'menu-item-url' => apply_filters( 'dfb_menu_item_url', $nav_menu_item_post->url, $from_blog_id, $to_blog_id, $menu_item_id ),
+			'menu-item-description' =>  apply_filters( 'dfb_menu_item_description', $nav_menu_item_post->description, $from_blog_id, $to_blog_id, $menu_item_id ),
+			'menu-item-attr-title' => apply_filters( 'dfb_menu_item_attr_title', $nav_menu_item_post->attr_title, $from_blog_id, $to_blog_id, $menu_item_id ),
+			'menu-item-target' =>  apply_filters( 'dfb_menu_item_target', $nav_menu_item_post->target, $from_blog_id, $to_blog_id, $menu_item_id ),
+			'menu-item-classes' => apply_filters( 'dfb_menu_item_classes', implode( ' ', $nav_menu_item_post->classes ), $from_blog_id, $to_blog_id, $menu_item_id ),
+			'menu-item-xfn' => apply_filters( 'dfb_menu_item_xfn', $nav_menu_item_post->xfn, $from_blog_id, $to_blog_id, $menu_item_id ),
 			'menu-item-status' => $nav_menu_item_post->post_status,
 		);
 		
