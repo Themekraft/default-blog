@@ -65,12 +65,17 @@ function default_blog_settings_copy( $from_blog_id, $to_blog_id ){
 }
 
 function default_blog_appearance_copy( $from_blog_id, $to_blog_id ){
+	
+	switch_to_blog( $to_blog_id );
+	$new_theme_mods = get_theme_mod( 'nav_menu_locations' );
+	restore_current_blog();
 		
 	switch_to_blog( $from_blog_id );
 		$current_template = get_option( 'current_theme' );
 		$template = get_option( 'template' );
 		$current_stylesheet = get_option( 'stylesheet' );
 		$theme_mods = get_option( 'theme_mods_' . $current_stylesheet );
+		$theme_mods[ 'nav_menu_locations' ] = $new_theme_mods; // Let them out because this is made in menu copy function before
 	restore_current_blog();
 	
 	switch_to_blog( $to_blog_id );

@@ -7,9 +7,9 @@ function default_blog_sidebars_admin(){
 	
 	switch_to_blog( DFB_TEMPLATE_EDIT_BLOG_ID );
 	
-	global $wp_registered_sidebars, $wp_registered_widgets;
-	
 	$sidebars_widgets = wp_get_sidebars_widgets();
+	
+	global $sidebars_widgets;
 	
 	$checked_sidebars = $default_blog_template[ 'sidebars' ];
 	
@@ -28,18 +28,20 @@ function default_blog_sidebars_admin(){
 	$content.= '<tbody>';
 	
 	foreach( $sidebars_widgets AS $sidebar_id => $sidebar ):
-		$sidebar_checked = '';
 		
-		// Is Nav Menu checked for a copy?
-		if( is_array( $checked_sidebars ) )
-			if( in_array( $sidebar_id, $checked_sidebars ) ) 
-				$sidebar_checked = ' checked';
+		if( 'wp_inactive_widgets' != $sidebar_id ):
+			$sidebar_checked = '';
 			
-		if( preg_match( '/sidebar-(\d)+/', $sidebar_id ) ):
+			// Is Nav Menu checked for a copy?
+			if( is_array( $checked_sidebars ) )
+				if( in_array( $sidebar_id, $checked_sidebars ) ) 
+					$sidebar_checked = ' checked';
+				
 			$content.= '<tr>';
-				$content.= '<td>' . $wp_registered_sidebars[ $sidebar_id ][ 'name' ] . '</td>';	
+				$content.= '<td>' . $sidebar_id . '</td>';	
 				$content.= '<td><input type="checkbox" name="' . DFB_OPTION_GROUP . '[' . DFB_TEMPLATE_EDIT_ID . '][sidebars][]" value="' . $sidebar_id . '"' . $sidebar_checked . ' /></td>';
         	$content.= '</tr>';
+			
 		endif;
 	endforeach;
 	
@@ -48,7 +50,7 @@ function default_blog_sidebars_admin(){
 	
 	foreach( $sidebars_widgets AS $sidebar_id => $sidebar ):
 		// If its a sidebar
-		if( preg_match( '/sidebar-(\d)+/', $sidebar_id ) ):
+		if( 'wp_inactive_widgets' != $sidebar_id ):
 			if( is_array( $checked_sidebars ) ):
 				if( in_array( $sidebar_id, $checked_sidebars ) ):
 			
@@ -59,7 +61,6 @@ function default_blog_sidebars_admin(){
 					
 					$content_tab.= '<thead>';
 					$content_tab.= '<tr>';
-						$content_tab.= '<th>' . __( 'Widget', 'default-blog-options' ) . '</th>';	
 						$content_tab.= '<th>' . __( 'ID', 'default-blog-options' ) . '</th>';	
 						$content_tab.= '<th>' . __( 'Copy', 'default-blog-options' ) . '</th>';
 			        $content_tab.= '</tr>';
@@ -81,8 +82,7 @@ function default_blog_sidebars_admin(){
 									$sidebar_widget_checked = ' checked';
 								
 							$content_tab.= '<tr>';
-								$content_tab.= '<td>' . $wp_registered_widgets[ $sidebar_widget ][ 'name' ] . '</td>';	
-								$content_tab.= '<td>' . $wp_registered_widgets[ $sidebar_widget ][ 'id' ] . '</td>';	
+								$content_tab.= '<td>' . $sidebar_widget . '</td>';	
 								$content_tab.= '<td><input type="checkbox" name="' . DFB_OPTION_GROUP . '[' . DFB_TEMPLATE_EDIT_ID . '][sidebar_widgets][' . $sidebar_id . '][]" value="' . $sidebar_widget . '"' . $sidebar_widget_checked . ' /></td>';
 					        $content_tab.= '</tr>';
 							
@@ -100,8 +100,8 @@ function default_blog_sidebars_admin(){
 					$content_tab.=  __( 'Delete automatic generated WordPress entries.', 'default_blog_options' ) . '</p>';
 					
 					$elements[] = array(
-						'id' => 'dfb_',
-						'title' => $wp_registered_sidebars[ $sidebar_id ][ 'name' ],
+						'id' => 'dfb_' .  sanitize_title( $sidebar_id ),
+						'title' => $sidebar_id,
 						'content' => $content_tab
 					);
 				endif;
@@ -116,6 +116,7 @@ function default_blog_sidebars_admin(){
 	
 	echo $content;
 	
+	/*
 	echo '<pre>';
 	// print_r( $sidebars_widgets );
 	echo '</pre>';
@@ -127,6 +128,7 @@ function default_blog_sidebars_admin(){
 	echo '<pre>';
 	// print_r( $wp_registered_widgets );
 	echo '</pre>';
+	*/
 	
 	do_action( 'default_blog_links_admin_bottom' );
 	

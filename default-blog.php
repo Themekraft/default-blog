@@ -186,7 +186,11 @@ class default_blog{
 	}
 	
 	public function admin_load_framework(){
-		$args['jqueryui_components'] = array( 'jquery-cookies', 'jquery-ui-tabs', 'jquery-ui-accordion' );
+		if( is_admin() ):
+			$args['jqueryui_components'] = array( 'jquery-cookies', 'jquery-ui-tabs', 'jquery-ui-accordion' );
+		else:
+			$args['jqueryui_components'] = array();
+		endif;
 		tk_framework( $args );
 	}
 	
